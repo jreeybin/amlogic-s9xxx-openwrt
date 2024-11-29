@@ -220,7 +220,7 @@ on:
         options:
           - ophub
           - angel
-          - yourname
+          - jreeybin
 
 env:
   TZ: America/New_York
