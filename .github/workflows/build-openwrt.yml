@@ -296,7 +296,7 @@ jobs:
               REPO_BRANCH="master"
               TAGS_NAME="lede"
           elif [[ "${{ inputs.source_branch }}" == *"immortalwrt"* ]]; then
-              REPO_URL="https://github.com/immortalwrt/immortalwrt"
+              REPO_URL="https://github.com/jreeybin/immortalwrt"
               REPO_BRANCH="openwrt-23.05"
               TAGS_NAME="immortalwrt"
           else
