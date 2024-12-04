@@ -6,6 +6,9 @@
 # Source code repository: https://github.com/immortalwrt/immortalwrt / Branch: master
 #========================================================================================================================
 
+# 设置根分区大小
+sed -i 's/CONFIG_TARGET_ROOTFS_PARTSIZE=.*/CONFIG_TARGET_ROOTFS_PARTSIZE=2048/' .config
+
 # ------------------------------- Main source started -------------------------------
 #
 # Add the default password for the 'root' user（Change the empty password to 'password'）
