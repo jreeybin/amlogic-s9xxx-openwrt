@@ -150,7 +150,7 @@ mount_try() {
     max_try="10"
     while [[ "${t}" -le "${max_try}" ]]; do
         # Mount according to the image partition format
-        if [[ "${m_type}" == "btrfs" ]]; then
+        if [[ "${m_type}" == "ext4" ]]; then
             mount -t ${m_type} -o discard,compress=zstd:6 ${m_dev} ${m_target}
         else
             mount -t ${m_type} -o discard ${m_dev} ${m_target}
