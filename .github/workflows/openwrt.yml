@@ -1,9 +1,4 @@
-#============================================================================================
-# https://github.com/ophub/amlogic-s9xxx-openwrt
-# Description: Build OpenWrt
-#============================================================================================
-
-name:  编译 OpenWrt
+name: Build OpenWrt
 
 on:
   repository_dispatch:
@@ -299,7 +294,7 @@ jobs:
               TAGS_NAME="lede"
           elif [[ "${{ inputs.source_branch }}" == *"immortalwrt"* ]]; then
               REPO_URL="https://github.com/jreeybin/immortalwrt"
-              REPO_BRANCH="openwrt-23.05"
+              REPO_BRANCH="master"
               TAGS_NAME="immortalwrt"
           else
               echo "Unknown source code repository."
@@ -354,7 +349,7 @@ jobs:
         run: |
           cd openwrt/
           echo -e "$(nproc) thread compile"
-          make -j$(($(nproc) + 1)) V=s || make -j1 || make -j1 V=s
+          make -j$(($(nproc) + 1)) V=s ROOTFS_PARTSIZE=256 || make -j1 || make -j1 V=s
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Clear server space
@@ -375,40 +370,6 @@ jobs:
           # Set output information
           df -hT ${PWD}
           echo "status=success" >> ${GITHUB_OUTPUT}
-          
-      - name: Collect IPK Files
-        id: collect-ipk
-        run: |
-          cd openwrt/bin/packages
-          mkdir -p /builder/ipk-files
-          find . -type f -name "*.ipk" -exec cp --parents {} /builder/ipk-files \;
-          echo "Collected all IPK files"
-
-      - name: Upload IPK Files to Release
-        uses: ncipollo/release-action@main
-        if: ${{ steps.collect-ipk.outcome == 'success' }}
-        with:
-          tag: ${{ steps.codes.outputs.build_tag }}
-          artifacts: /builder/ipk-files/*
-          allowUpdates: true
-          removeArtifacts: false
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            ### OpenWrt Image and IPK Packages
-            - Default IP: 10.0.0.1
-            - Default username: root
-            - Default password: password
-            - Default WIFI name: OpenWrt
-            - Default WIFI password: none
-            ### Install to EMMC
-            - Login to OpenWrt → System → Amlogic Service → Install OpenWrt
-            ### OpenWrt source code
-            - [${{ steps.codes.outputs.TAGS_NAME }}](${{ steps.codes.outputs.REPO_URL }})
-            ### IPK Files
-            - All `.ipk` packages for the current build are included.
-            ### OpenWrt Image Verification
-            - sha256sum
 
       - name: Upload OpenWrt to Release
         uses: ncipollo/release-action@main
