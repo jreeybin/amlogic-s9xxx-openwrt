@@ -349,7 +349,7 @@ jobs:
         run: |
           cd openwrt/
           echo -e "$(nproc) thread compile"
-          make -j$(($(nproc) + 1)) V=s ROOTFS_PARTSIZE=2048 || make -j1 || make -j1 V=s
+          make -j$(($(nproc) + 1)) V=s || make -j1 || make -j1 V=s
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Clear server space
@@ -393,6 +393,7 @@ jobs:
           kernel_repo: ${{ inputs.kernel_repo }}
           kernel_usage: ${{ inputs.kernel_usage }}
           builder_name: ${{ inputs.builder_name }}
+          extra_args: "-s 2048"
 
       - name: Upload the packaged OpenWrt
         uses: ncipollo/release-action@main
