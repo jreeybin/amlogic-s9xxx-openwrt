@@ -31,9 +31,9 @@ inputs:
     required: false
     default: "true"
   openwrt_size:
-    description: "Set the rootfs size(Unit: MiB)."
+    description: "Set the rootfs size (Unit: MiB)."
     required: false
-    default: ""
+    default: "2048"  # 默认值设置为 2048 MiB
   builder_name:
     description: "Set OpenWrt builder signature."
     required: false
@@ -47,6 +47,7 @@ runs:
         cd ${GITHUB_ACTION_PATH}
         echo -e "ophub package actions path: [ ${PWD} ]"
 
+        # 处理 OpenWrt 文件路径
         openwrt_filename="${{ inputs.openwrt_path }}"
         openwrt_savefile="${openwrt_filename##*/}"
         openwrt_savepath="openwrt-armvirt"
@@ -56,6 +57,7 @@ runs:
         [[ -d "${openwrt_savepath}" ]] || mkdir -p ${openwrt_savepath}
         [[ -d "${openwrt_outpath}" ]] || mkdir -p ${openwrt_outpath}
 
+        # 下载或复制 OpenWrt 文件
         if [[ "${openwrt_filename}" == http* ]]; then
             echo -e "Download file: [ ${openwrt_filename} ]"
             curl -fsSL "${openwrt_filename}" -o "${openwrt_savepath}/${openwrt_savefile}"
@@ -70,6 +72,7 @@ runs:
         sync
         echo -e "About the [ ${openwrt_savepath} ] directory: \n$(ls -l ${openwrt_savepath} 2>/dev/null)"
 
+        # 开始构建 OpenWrt
         cd ${GITHUB_ACTION_PATH}
         echo -e "Start to make openwrt..."
         make_command=""
@@ -78,16 +81,19 @@ runs:
         [[ -n "${{ inputs.kernel_usage }}" ]] && make_command="${make_command} -u ${{ inputs.kernel_usage }}"
         [[ -n "${{ inputs.openwrt_kernel }}" ]] && make_command="${make_command} -k ${{ inputs.openwrt_kernel }}"
         [[ -n "${{ inputs.auto_kernel }}" ]] && make_command="${make_command} -a ${{ inputs.auto_kernel }}"
-        [[ -n "${{ inputs.openwrt_size }}" ]] && make_command="${make_command} -s ${{ inputs.openwrt_size }}"
+        [[ -n "${{ inputs.openwrt_size }}" ]] && make_command="${make_command} -s ${{ inputs.openwrt_size }}" || make_command="${make_command} -s 2048"
         [[ -n "${{ inputs.builder_name }}" ]] && make_command="${make_command} -n ${{ inputs.builder_name }}"
+        
+        # 执行构建命令
         sudo ./remake ${make_command}
 
+        # 处理输出文件
         cd ${GITHUB_ACTION_PATH}/${openwrt_outpath}
-        # Generate a sha256sum verification file for each OpenWrt image file
         for file in *; do [[ -f "${file}" ]] && sha256sum "${file}" >"${file}.sha" 2>/dev/null; done
         rm -f *.sha.sha 2>/dev/null
         sync && sleep 3
 
+        # 输出环境变量
         cd ${GITHUB_ACTION_PATH}
         echo -e "Output environment variables."
         echo "PACKAGED_OUTPUTPATH=${PWD}/${openwrt_outpath}" >> ${GITHUB_ENV}
