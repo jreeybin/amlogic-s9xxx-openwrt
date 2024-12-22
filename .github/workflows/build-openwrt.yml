@@ -394,11 +394,12 @@ jobs:
           openwrt_path: openwrt/output/*rootfs.tar.gz
           openwrt_board: ${{ inputs.openwrt_board }}
           openwrt_kernel: ${{ inputs.openwrt_kernel }}
+          openwrt_size: ${{ inputs.openwrt_size }}
           auto_kernel: ${{ inputs.auto_kernel }}
           kernel_repo: ${{ inputs.kernel_repo }}
           kernel_usage: ${{ inputs.kernel_usage }}
           builder_name: ${{ inputs.builder_name }}
-          openwrt_size: ${{ inputs.openwrt_size }}
+          
 
       - name: Upload the packaged OpenWrt
         uses: ncipollo/release-action@main
