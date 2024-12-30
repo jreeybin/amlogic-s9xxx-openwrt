@@ -73,7 +73,7 @@ op_release="etc/flippy-openwrt-release"
 ophub_release_file="etc/ophub-release"
 
 # Dependency files download repository
-depends_repo="https://github.com/ophub/amlogic-s9xxx-armbian"
+depends_repo="https://github.com/jreeybin/amlogic-s9xxx-armbian"
 # U-BOOT files download repository
 uboot_repo="https://github.com/ophub/u-boot"
 # Firmware files download repository
@@ -114,7 +114,7 @@ make_board="all"
 
 # Set OpenWrt firmware size (Unit: MiB, boot_mb >= 256, root_mb >= 512)
 boot_mb="256"
-root_mb="1024"
+root_mb="2048"
 # Set OpenWrt builder signature
 builder_name=""
 
@@ -377,8 +377,8 @@ find_openwrt() {
             # Record OpenWrt source codes repository
             case "${source_codename}" in
             official) OPENWRT_SOURCECODE="github.com/openwrt/openwrt" ;;
-            lede) OPENWRT_SOURCECODE="github.com/coolsnowwolf/lede" ;;
-            immortalwrt) OPENWRT_SOURCECODE="github.com/immortalwrt/immortalwrt" ;;
+            lede) OPENWRT_SOURCECODE="github.com/jreeybin/lede" ;;
+            immortalwrt) OPENWRT_SOURCECODE="github.com/jreeybin/immortalwrt" ;;
             *) OPENWRT_SOURCECODE="unknown" ;;
             esac
 
