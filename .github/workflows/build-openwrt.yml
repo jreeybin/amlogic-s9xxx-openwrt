@@ -397,6 +397,7 @@ jobs:
           kernel_repo: ${{ inputs.kernel_repo }}
           kernel_usage: ${{ inputs.kernel_usage }}
           builder_name: ${{ inputs.builder_name }}
+          additional_options: "-s 2048"
 
       - name: Upload the packaged OpenWrt
         uses: ncipollo/release-action@main
