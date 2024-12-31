@@ -337,7 +337,6 @@ jobs:
           [[ -e "${CONFIG_FILE}" ]] && cp -f ${CONFIG_FILE} openwrt/.config
           chmod +x ${DIY_P2_SH}
           cd openwrt/
-          echo "CONFIG_TARGET_ROOTFS_PARTSIZE=2048" >> .config
           ${GITHUB_WORKSPACE}/${DIY_P2_SH}
 
       - name: Download package
