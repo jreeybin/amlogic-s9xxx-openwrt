@@ -114,7 +114,7 @@ make_board="all"
 
 # Set OpenWrt firmware size (Unit: MiB, boot_mb >= 256, root_mb >= 512)
 boot_mb="256"
-root_mb="1024"
+root_mb="2048"
 # Set OpenWrt builder signature
 builder_name=""
 
@@ -377,8 +377,8 @@ find_openwrt() {
             # Record OpenWrt source codes repository
             case "${source_codename}" in
             official) OPENWRT_SOURCECODE="github.com/openwrt/openwrt" ;;
-            lede) OPENWRT_SOURCECODE="github.com/coolsnowwolf/lede" ;;
-            immortalwrt) OPENWRT_SOURCECODE="github.com/immortalwrt/immortalwrt" ;;
+            lede) OPENWRT_SOURCECODE="github.com/jreeybin/lede" ;;
+            immortalwrt) OPENWRT_SOURCECODE="github.com/jreeybin/immortalwrt" ;;
             *) OPENWRT_SOURCECODE="unknown" ;;
             esac
 
