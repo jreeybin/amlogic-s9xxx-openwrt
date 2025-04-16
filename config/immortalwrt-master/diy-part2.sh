@@ -26,6 +26,8 @@ sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 rm -rf package/luci-app-amlogic
 git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 git clone https://github.com/linkease/istore package/luci-app-store
+git clone https://github.com/kenzok8/openwrt-packages package/luci-app-quickstart
+git clone https://github.com/kenzok8/openwrt-packages package/luci-app-adguardhome
 #
 # Apply patch
 # git apply ../config/patches/{0001*,0002*}.patch --directory=feeds/luci
