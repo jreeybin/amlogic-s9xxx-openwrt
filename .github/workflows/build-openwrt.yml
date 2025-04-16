@@ -228,7 +228,7 @@ on:
         options:
           - ophub
           - angel
-          - yourname
+          - jreeybin
 
 env:
   FEEDS_CONF: config/${{ inputs.source_branch }}/feeds.conf.default
@@ -298,11 +298,11 @@ jobs:
               TAGS_NAME="official"
           elif [[ "${{ inputs.source_branch }}" == *"lede"* ]]; then
               REPO_URL="https://github.com/coolsnowwolf/lede"
-              REPO_BRANCH="master"
+              REPO_BRANCH="openwrt-24.10"
               TAGS_NAME="lede"
           elif [[ "${{ inputs.source_branch }}" == *"immortalwrt"* ]]; then
               REPO_URL="https://github.com/immortalwrt/immortalwrt"
-              REPO_BRANCH="master"
+              REPO_BRANCH="openwrt-24.10"
               TAGS_NAME="immortalwrt"
           else
               echo "Unknown source code repository."
@@ -414,7 +414,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             ### OpenWrt Image information
-            - Default IP: 192.168.1.1
+            - Default IP: 10.0.0.1
             - Default username: root
             - Default password: password
             - Default WIFI name: OpenWrt
